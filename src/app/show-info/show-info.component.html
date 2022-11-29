@@ -1,0 +1,217 @@
+<span class="loader"></span>
+<app-header></app-header>
+<div>
+  <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs mt-4">
+    <li [ngbNavItem]="1">
+      <a ngbNavLink>Films</a>
+      <ng-template ngbNavContent>
+
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Episode</th>
+              <th scope="col">Director</th>
+              <th scope="col">View</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let film of filmsData?.results | searchFilter:getKeyWord(); index as i">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ film?.title }}
+              </td>
+              <td>{{ film?.episode_id }}</td>
+              <td>{{ film?.director }}</td>
+              <td><button class="btn third" (click)="goToDetails(film?.title, 'film')">View</button></td>
+
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="filmsData.next" class="text-end me-4">
+          <button class="btn btn-outline-primary me-3" *ngIf="peoplesData.previous"
+            (click)="navigatePeople(peoplesData.previous)">Prev</button>
+          <button class="btn btn-outline-primary" *ngIf="peoplesData.next"
+            (click)="navigatePeople(peoplesData.next)">Next</button>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="2">
+      <a ngbNavLink>People</a>
+      <ng-template ngbNavContent>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Height</th>
+              <th scope="col">Home World</th>
+              <th scope="col">Birth Year</th>
+              <th scope="col">View</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let people of peoplesData?.results | searchFilter:getKeyWord(); index as i; trackBy:trackIndex"
+              (click)="goToDetails(people?.name,'people')">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ people?.name }}
+              </td>
+              <td>{{ people?.height | heightFilter }}</td>
+              <td>{{ people?.homeworld | homeWorldName | async}}</td>
+              <td>{{ people?.birth_year }}</td>
+              <td><button class="btn third" (click)="goToDetails(people?.name, 'people')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="peoplesData.next || planetsData.previous" class="text-end me-4">
+          <button class="btn btn-outline-primary me-3" *ngIf="peoplesData.previous"
+            (click)="navigatePeople(peoplesData.previous)">Prev</button>
+          <button class="btn btn-outline-primary" *ngIf="peoplesData.next"
+            (click)="navigatePeople(peoplesData.next)">Next</button>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="3">
+      <a ngbNavLink>Planets</a>
+      <ng-template ngbNavContent>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Climate</th>
+              <th scope="col">Population</th>
+              <th scope="col">View</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let planet of planetsData?.results | searchFilter:getKeyWord(); index as i; trackBy:trackIndex">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ planet?.name }}
+              </td>
+              <td>{{ planet?.climate}}</td>
+              <td>{{ planet?.population}}</td>
+              <td><button class="btn third" (click)="goToDetails(planet?.name, 'planet')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="planetsData.next || planetsData.previous" class="text-end me-4">
+          <button class="btn btn-outline-primary me-3" *ngIf="peoplesData.previous"
+            (click)="navigatePeople(peoplesData.previous)">Prev</button>
+          <button class="btn btn-outline-primary" *ngIf="peoplesData.next"
+            (click)="navigatePeople(peoplesData.next)">Next</button>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="4">
+      <a ngbNavLink>Species</a>
+      <ng-template ngbNavContent>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Classification</th>
+              <th scope="col">Homeworld</th>
+              <th scope="col">View</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let specie of speciesData?.results | searchFilter:getKeyWord(); index as i; trackBy:trackIndex">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ specie?.name }}
+              </td>
+              <td>{{ specie?.classification}}</td>
+              <td>{{ specie?.homeworld | homeWorldName | async }}</td>
+              <td><button class="btn third" (click)="goToDetails(specie?.name, 'specie')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="speciesData.next || planetsData.previous" class="text-end me-4">
+          <button class="btn btn-outline-primary me-3" *ngIf="peoplesData.previous"
+            (click)="navigatePeople(peoplesData.previous)">Prev</button>
+          <button class="btn btn-outline-primary" *ngIf="peoplesData.next"
+            (click)="navigatePeople(peoplesData.next)">Next</button>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="5">
+      <a ngbNavLink>Starships</a>
+      <ng-template ngbNavContent>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Length</th>
+              <th scope="col">Passengers</th>
+              <th scope="col">View</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let planet of starshipData?.results | searchFilter:getKeyWord(); index as i; trackBy:trackIndex">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ planet?.name }}
+              </td>
+              <td>{{ planet?.length | lenghtFilter}}</td>
+              <td>{{ planet?.passengers}}</td>
+              <td><button class="btn third" (click)="goToDetails(planet?.name, 'starship')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="starshipData.next || planetsData.previous" class="text-end me-4">
+          <button class="btn btn-outline-primary me-3" *ngIf="peoplesData.previous"
+            (click)="navigatePeople(peoplesData.previous)">Prev</button>
+          <button class="btn btn-outline-primary" *ngIf="peoplesData.next"
+            (click)="navigatePeople(peoplesData.next)">Next</button>
+        </div>
+      </ng-template>
+    </li>
+    <li [ngbNavItem]="6">
+      <a ngbNavLink>Vehicles</a>
+      <ng-template ngbNavContent>
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">speed</th>
+              <th scope="col">model</th>
+              <th scope="col">View</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let planet of vehiclesData?.results | searchFilter:getKeyWord(); index as i; trackBy:trackIndex">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>
+                {{ planet?.name }}
+              </td>
+              <td>{{ planet?.max_atmosphering_speed}} km/h</td>
+              <td>{{ planet?.model}}</td>
+              <td><button class="btn third" (click)="goToDetails(planet?.name, 'vehicle')">View</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="vehiclesData.next || planetsData.previous" class="text-end me-4">
+          <button class="btn btn-outline-primary me-3" *ngIf="peoplesData.previous"
+            (click)="navigatePeople(peoplesData.previous)">Prev</button>
+          <button class="btn btn-outline-primary" *ngIf="peoplesData.next"
+            (click)="navigatePeople(peoplesData.next)">Next</button>
+        </div>
+      </ng-template>
+    </li>
+  </ul>
+  <div [ngbNavOutlet]="nav" class="mt-2"></div>
+</div>

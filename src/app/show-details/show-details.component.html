@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div class="container my-5">
+  <div class="row w-75 mx-auto">
+    Category : {{ category }}
+    <div *ngIf="person">
+      <div class="card py-3 px-2" *ngFor="let data of compiledData">
+        <div class="card-head text-center">
+          {{ data.name }}
+        </div>
+        <hr>
+        <div class="card-body  p-3">
+          <p class="border-bottom  p-3"> Gender: {{ data.gender}} </p>
+          <p class="border-bottom  p-3"> Height: {{ data.height }} </p>
+          <p class="border-bottom  p-3"> Mass: {{ data.mass}} </p>
+          <p class="border-bottom  p-3"> Hair Color: {{ data.hair_color}} </p>
+          <p class="border-bottom  p-3"> Eye Color: {{ data.eye_color}} </p>
+          <p class="border-bottom  p-3"> Skin Color: {{ data.skin_color}} </p>
+          <p class="border-bottom  p-3"> Birth Year: {{ data.birth_year}} </p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="starShip">
+      <div class="card py-3 px-2" *ngFor="let data of compiledData">
+        <div class="card-head text-center">
+          {{ data.name }}
+        </div>
+        <hr>
+        <div class="card-body p-3">
+          <p class="border-bottom  p-3"> manufacturer: {{ data.manufacturer}} </p>
+          <p class="border-bottom  p-3"> Capacity: {{ data.cargo_capacity }} </p>
+          <p class="border-bottom  p-3"> length: {{ data.length}} </p>
+          <p class="border-bottom  p-3"> passengers: {{ data.passengers}} </p>
+          <p class="border-bottom  p-3"> max_atmosphering_speed: {{ data.max_atmosphering_speed}} </p>
+          <p class="border-bottom  p-3"> cost_in_credits: {{ data.cost_in_credits}} </p>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="inProgress">
+      <!-- <div class="overlay"></div>
+      <div class="stars" aria-hidden="true"></div>
+      <div class="starts2" aria-hidden="true"></div>
+      <div class="stars3" aria-hidden="true"></div>
+      <main class="main">
+        <section class="contact">
+          <h1 class="title">Awesome Thing</h1>
+          <h2 class="sub-title">Site Under Construction</h2>
+        </section>
+      </main> -->
+      <h1>Working In Progress</h1>
+    </div>
+  </div>

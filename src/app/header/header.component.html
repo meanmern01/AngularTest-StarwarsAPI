@@ -1,0 +1,15 @@
+<div class="topnav align-items-center">
+  <div *ngFor="let search of LatestSearch">
+    <a (click)="searchTags(search)">{{ search }}</a>
+  </div>
+
+  <div class="search-container row align-items-center">
+    <form (submit)="handleSubmit($event)">
+      <input type="text" #selectedLaw [ngModel]="newSearch" (input)="addSearch($event?.target)" placeholder="Search.."
+        name="search">
+      <button class="btn btn-primary" [disabled]="newSearch === ''"><i class="fa fa-search"></i></button>
+      <button class="btn" (click)="reset($event)" [disabled]="checkLogic()">Reset</button>
+    </form>
+  </div>
+</div>
+<!-- #selectedLaw (change)="lawChanges(selectedLaw.value)" -->
